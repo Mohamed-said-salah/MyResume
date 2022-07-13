@@ -381,7 +381,7 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form method="post" role="form" class="php-email-form">
+
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -394,16 +394,12 @@
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
               </div>
               <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" id="message" required></textarea>
               </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+              <div class="text-center" style="padding-top: 50px; padding-bottom: 20px; display: inline-block;"><button class="btn btn-primary" id="submit"> Submit</button></div>
+              <div class="alert alert-primary" id="succ" style="display: none;" role="alert">
+                Loading ...
               </div>
-              <div class="text-center" style="display: inline-block;"><button type="submit">Send Message</button></div>
-              
-            </form>
 
           </div>
 
@@ -419,10 +415,10 @@
     <div class="container">
       <h3>Mohamed Ragab</h3>
       <div class="social-links">
-        <a href="https://github.com/MohamedRagaab" class="linkedin"><i class="bx bxl-github"></i></a>
-        <a href="https://www.linkedin.com/in/mohamedragab2/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-        <a href="https://www.facebook.com/mohamedragabfergany" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="https://twitter.com/MohamedRagabFer" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://github.com/MohamedRagaab" class="linkedin" target="_blank"><i class="bx bxl-github"></i></a>
+        <a href="https://www.linkedin.com/in/mohamedragab2/" class="linkedin" target="_blank"><i class="bx bxl-linkedin"></i></a>
+        <a href="https://www.facebook.com/mohamedragabfergany" class="facebook" target="_blank"><i class="bx bxl-facebook"></i></a>
+        <a href="https://twitter.com/MohamedRagabFer" class="twitter" target="_blank"><i class="bx bxl-twitter"></i></a>
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -444,6 +440,67 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  
+  <!-- Firebase Connection -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCMLklsCQJG2ZibHCOVH7q4RGLE7IEbphY",
+      authDomain: "myresume-21572.firebaseapp.com",
+      databaseURL: "https://myresume-21572-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "myresume-21572",
+      storageBucket: "myresume-21572.appspot.com",
+      messagingSenderId: "971395137391",
+      appId: "1:971395137391:web:bab9ffbdd85423fb09329a",
+      measurementId: "G-T820LKJ2XW"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    import { getDatabase, ref, set, child, update, remove } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
+
+    const db = getDatabase(app);
+
+    // Database References
+    var nameF = document.getElementById('name');
+    var emailF = document.getElementById('email');
+    var messageF = document.getElementById('message');
+    var subjectF = document.getElementById('subject');
+    
+    // Insert Data to Firebase
+    function insertData() {
+      document.getElementById('succ').style.display = "block";
+      console.log('insertData');
+      console.log(emailF.value);
+      set(ref(db,"messages/"+nameF.value), {
+        name: nameF.value,
+        email: emailF.value,
+        message: messageF.value,
+        subject: subjectF.value
+      }).then(()=>{
+        console.log("Message Sent Successfully");
+        document.getElementById('succ').innerHTML = "Thank You, Your Message Has Been Sent Successfully!";
+        document.getElementById('submit').style.display = "none";
+      }).catch(err=>{
+        console.log("Message Sent Unsuccessfully, error "+err);
+      });
+    }
+
+    // Assign Event Listener to the Button
+    var submitBtn = document.getElementById('submit');
+    submitBtn.addEventListener('click', insertData);
+
+  </script>
+
 
 </body>
 
