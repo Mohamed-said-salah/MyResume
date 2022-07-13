@@ -471,14 +471,30 @@
 
     const db = getDatabase(app);
 
+    // Telegram Get Request
+    function httpGet(theUrl)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+        xmlHttp.send( null );
+        return xmlHttp.responseText;
+    }
+
     // Database References
     var nameF = document.getElementById('name');
     var emailF = document.getElementById('email');
     var messageF = document.getElementById('message');
     var subjectF = document.getElementById('subject');
-    
+
     // Insert Data to Firebase
     function insertData() {
+      // Telegram Bot
+      var chat_id = "-557462749";
+      var token = "5452587189:AAFulNzpgt8p3hx2k2_pPdSEkWvBWWATYzU";
+      var client = "Hello you received a new Message%0AFrom: "+nameF.value + "%0Aemail: " + emailF.value + "%0Asubject: " + subjectF.value+"%0Amessage: " + messageF.value;
+      var urlbot = "https://api.telegram.org/bot"+token+"/sendMessage?chat_id="+chat_id+"&text="+client;
+      httpGet(urlbot);
+      // firebase
       document.getElementById('succ').style.display = "block";
       console.log('insertData');
       console.log(emailF.value);
@@ -495,10 +511,11 @@
         console.log("Message Sent Unsuccessfully, error "+err);
       });
     }
-
+  
     // Assign Event Listener to the Button
     var submitBtn = document.getElementById('submit');
     submitBtn.addEventListener('click', insertData);
+
 
   </script>
 
