@@ -422,21 +422,23 @@
 
             <div class="row">
               <div class="col-md-6 form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required disabled>
               </div>
               <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required
+                  disabled>
               </div>
             </div>
             <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required
+                disabled>
             </div>
             <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="5" placeholder="Message" id="message"
-                required></textarea>
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" id="message" required
+                disabled></textarea>
             </div>
             <div class="text-center" style="padding-top: 50px; padding-bottom: 20px; display: inline-block;"><button
-                class="btn btn-primary" id="submit"> Submit</button></div>
+                class="btn btn-primary" id="submit" disabled> Submit</button></div>
             <div class="alert alert-primary" id="succ" style="display: none;" role="alert">
               Loading ...
             </div>
